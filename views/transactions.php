@@ -34,20 +34,46 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- YOUR CODE -->
+                <?php
+                  foreach ($transactions as $tr){
+                    $style = "";
+                    if (str_starts_with($tr[3],"-")){
+                      $style = '"color: red"';
+                    }
+                    else {
+                      $style = '"color: green"';
+                    }
+                    $date = formatDate($tr[0]);
+                    $t_data = <<<TEXT
+                    <tr>
+                      <td>$date</td>
+                      <td>$tr[1]</td>
+                      <td>$tr[2]</td>
+                      <td style=$style>$tr[3]</td>
+                    </tr>
+                    TEXT;
+                    echo $t_data;
+                  }
+                 ?>
             </tbody>
             <tfoot>
                 <tr>
                     <th colspan="3">Total Income:</th>
-                    <td><!-- YOUR CODE --></td>
+                    <td>
+                      <?php echo floatToDollars($totalIncome); ?>
+                    </td>
                 </tr>
                 <tr>
                     <th colspan="3">Total Expense:</th>
-                    <td><!-- YOUR CODE --></td>
+                    <td>
+                      <?php echo floatToDollars($totalExpense); ?>
+                    </td>
                 </tr>
                 <tr>
                     <th colspan="3">Net Total:</th>
-                    <td><!-- YOUR CODE --></td>
+                    <td>
+                      <?php echo floatToDollars($netTotal); ?>
+                    </td>
                 </tr>
             </tfoot>
         </table>
