@@ -38,7 +38,7 @@ function checkCSVHeader($csv_data){
 }
 
 function calculateTotalAmount($transactions):array{
-  $floatVals = array_map(fn($item) => str_replace(["$", ","],"",$item[3]), $transactions);
+  $floatVals = array_map(fn($item) => (float) str_replace(["$", ","],"",$item[3]), $transactions);
   $totalIncome = array_sum(array_filter($floatVals, fn($item) => $item >= 0));
   $totalExpense = array_sum(array_filter($floatVals, fn($item) => $item < 0));
   $netTotal = $totalIncome + $totalExpense;
