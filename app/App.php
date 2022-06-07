@@ -7,6 +7,7 @@ declare(strict_types = 1);
 function getCSVFiles($file_path){
   $files_list = array_diff(scandir($file_path), [".",".."]);
   $files_list = array_filter($files_list, fn($item) => str_ends_with($item, ".csv"));
+  $files_list = array_filter($files_list, fn($item) => is_file($file_path . $item));
   return $files_list;
 }
 
@@ -16,7 +17,7 @@ function readCSVFile($file_name, $file_path){
     return false;
   }
   else {
-    $file = fopen($file_addr,"r"); // read mode -- it returns a resource
+    $file = fopen($file_addr,"r");
     $result = [];
     while (($line = fgetcsv($file)) != false) {
       array_push($result,$line);
@@ -39,11 +40,8 @@ function checkCSVHeader($csv_data){
 function calculateTotalAmount($transactions):array{
   $floatVals = array_map(fn($item) => str_replace(["$", ","],"",$item[3]), $transactions);
   $totalIncome = array_sum(array_filter($floatVals, fn($item) => $item >= 0));
-  // $totalIncome = array_filter($floatVals, fn($item) => $item >= 0);
   $totalExpense = array_sum(array_filter($floatVals, fn($item) => $item < 0));
-  // $totalExpense = 0;
   $netTotal = $totalIncome + $totalExpense;
-  // $netTotal = 0;
   return [$totalIncome, $totalExpense, $netTotal];
 }
 
