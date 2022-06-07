@@ -59,3 +59,25 @@ function floatToDollars($float_val){
 function formatDate($dt_string){
   return date("M j, Y", strtotime($dt_string));
 }
+
+function generateTableRows($transactions){
+  foreach ($transactions as $tr){
+    $style = "";
+    if (str_starts_with($tr[3],"-")){
+      $style = '"color: red"';
+    }
+    else {
+      $style = '"color: green"';
+    }
+    $date = formatDate($tr[0]);
+    $t_data = <<<TEXT
+    <tr>
+      <td>$date</td>
+      <td>$tr[1]</td>
+      <td>$tr[2]</td>
+      <td style=$style>$tr[3]</td>
+    </tr>
+    TEXT;
+    echo $t_data;
+  }
+}

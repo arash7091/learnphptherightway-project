@@ -26,7 +26,4 @@ foreach($csv_files as $csv){
 
 
 // display
-include "../../../printVars.php";
 include "../views/transactions.php";
-
-// printVars(get_defined_vars());
